@@ -26,6 +26,19 @@ def check_id(client_id):
 	else:
 		return 0
 
+#function that show password field
+def show_password_field():
+	nameLabel=tkinter.Label(text="Please enter your password").place(x=20, y=80)
+	enteredPass=tkinter.Entry(root,show='*')
+	enteredPass.place(x=50, y=100)
+
+#function that show invalid ID
+def show_invalidID_field():
+	topLevelVar=tkinter.Toplevel()
+	topLevelVar.configure(bg='red')
+	topLevelVar.geometry("300x300+600+350")
+	tkinter.Label(topLevelVar, text='Invalid ID !').place(x=70,y=120)
+
 #function that checks the entered password
 def check_password(client_id):
 	password,attempts=0,0
@@ -46,16 +59,9 @@ def check_id_gui():
 	client_id=int(enteredID.get())
 	idFlag=check_id(client_id)
 	if(idFlag==1):
-		# passFlag=check_password(client_id)
-		print("true")
-		nameLabel=tkinter.Label(text="Please enter your password").place(x=20, y=80)
-		enteredPass=tkinter.Entry(root,show='*')
-		enteredPass.place(x=50, y=100)
+		show_password_field()
 	else:
-		topLevelVar=tkinter.Toplevel()
-		topLevelVar.configure(bg='red')
-		topLevelVar.geometry("300x300+600+350")
-		tkinter.Label(topLevelVar, text='Invalid ID !').place(x=70,y=120)
+		show_invalidID_field()
 
 
 #main program
