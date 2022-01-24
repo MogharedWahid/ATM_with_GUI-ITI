@@ -25,11 +25,7 @@ def check_id(client_id):
 			return 1
 	else:
 		return 0
-<<<<<<< HEAD
 
-=======
-#kosm el khara
->>>>>>> 9561d79e5e933c9f0bb7582c42ffa216c0cfb6b4
 #function that checks the entered password
 def check_password(client_id):
 	password,attempts=0,0
