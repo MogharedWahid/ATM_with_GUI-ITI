@@ -69,30 +69,35 @@ def check_password_gui():
 			enteredPass.destroy()
 
 			cashWithdraw=tkinter.Button(root,height=5,width=20,text="Cash Withdraw",bg='black',fg='white',command=check_id_gui)
-			cashWithdraw.place(x=800,y=200)
+			cashWithdraw.place(x=800,y=100)
 
 			balanceInquiry=tkinter.Button(root,height=5,width=20,text="Balance Inquiry",bg='black',fg='white',command=check_id_gui)
-			balanceInquiry.place(x=800,y=300)
+			balanceInquiry.place(x=800,y=200)
 
 			passwordChange=tkinter.Button(root,height=5,width=20,text="Password Change",bg='black',fg='white',command=check_id_gui)
-			passwordChange.place(x=800,y=400)
+			passwordChange.place(x=800,y=300)
 
 			fawryService=tkinter.Button(root,height=5,width=20,text="Fawry Service",bg='black',fg='white',command=check_id_gui)
-			fawryService.place(x=800,y=500)
+			fawryService.place(x=800,y=400)
 
 			exit=tkinter.Button(root,height=5,width=20,text="Exit",bg='black',fg='white',command=check_id_gui)
-			exit.place(x=800,y=600)
+			exit.place(x=800,y=500)
+
+			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Arial", 25))
+			welcomeLabel.place(x=200, y=100)
 
   			
 			  	
 #function that display balance
 def check_id_gui():
-	client_id=int(enteredID.get())
-	idFlag=check_id(client_id)
-	if(idFlag):
-		show_password_field()
-	else:
-		show_invalidID_field()
+  global client_id
+  client_id = int(enteredID.get())
+  idFlag=check_id(client_id)
+  if(idFlag):
+    show_password_field()
+  else:
+    show_invalidID_field()
+  
 
 
 #main program
