@@ -25,6 +25,9 @@ def check_id(client_id):
 			return 1
 	else:
 		return 0
+
+
+		#ksadaslfalskfnalsklf
 #function that checks the entered password
 def check_password(client_id):
 	password,attempts=0,0
