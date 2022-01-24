@@ -28,9 +28,13 @@ def check_id(client_id):
 
 #function that show password field
 def show_password_field():
-	nameLabel=tkinter.Label(text="Please enter your password").place(x=20, y=80)
+	global passLabel
+	passLabel=tkinter.Label(text="Please enter your password")
+	passLabel.place(x=20, y=80)
+	global enteredPass
 	enteredPass=tkinter.Entry(root,show='*')
 	enteredPass.place(x=50, y=100)
+	Enter_Button.configure(command=check_password_gui)
 
 #function that show invalid ID
 def show_invalidID_field():
@@ -41,24 +45,51 @@ def show_invalidID_field():
 
 #function that checks the entered password
 def check_password(client_id):
-	password,attempts=0,0
-	while password != myDict[client_id]['Password'] and attempts<3:
-		password=int(input("Enter your password:"))
-		attempts+=1
-		if(password != myDict[client_id]['Password']):
-			print("Wrong password, ",end=' ')
-	if(password == myDict[client_id]['Password'] and attempts <= 3 ):
-		return 1
-	else:
-		myDict[client_id]['Locked']=1
-		return 0
+	# password,attempts=client_id,0
+	# while password != myDict[client_id]['Password'] and attempts<3:
+	# 	password=int(input("Enter your password:"))
+	# 	attempts+=1
+	# 	if(password != myDict[client_id]['Password']):
+	# 		print("Wrong password, ",end=' ')
+	# if(password == myDict[client_id]['Password'] and attempts <= 3 ):
+	# 	return 1
+	# else:
+	# 	myDict[client_id]['Locked']=1
+	# 	return 0
+	return 1
 		
+def check_password_gui():
+	client_pass = int(enteredPass.get())
+	if(check_password(client_pass)):
+			Enter_Button.destroy()
+			Close_Button.destroy()
+			IDLabel.destroy()
+			passLabel.destroy()
+			enteredID.destroy()
+			enteredPass.destroy()
 
+			cashWithdraw=tkinter.Button(root,height=5,width=20,text="Cash Withdraw",bg='black',fg='white',command=check_id_gui)
+			cashWithdraw.place(x=800,y=200)
+
+			balanceInquiry=tkinter.Button(root,height=5,width=20,text="Balance Inquiry",bg='black',fg='white',command=check_id_gui)
+			balanceInquiry.place(x=800,y=300)
+
+			passwordChange=tkinter.Button(root,height=5,width=20,text="Password Change",bg='black',fg='white',command=check_id_gui)
+			passwordChange.place(x=800,y=400)
+
+			fawryService=tkinter.Button(root,height=5,width=20,text="Fawry Service",bg='black',fg='white',command=check_id_gui)
+			fawryService.place(x=800,y=500)
+
+			exit=tkinter.Button(root,height=5,width=20,text="Exit",bg='black',fg='white',command=check_id_gui)
+			exit.place(x=800,y=600)
+
+  			
+			  	
 #function that display balance
 def check_id_gui():
 	client_id=int(enteredID.get())
 	idFlag=check_id(client_id)
-	if(idFlag==1):
+	if(idFlag):
 		show_password_field()
 	else:
 		show_invalidID_field()
@@ -71,7 +102,8 @@ root.geometry("1000x720+250+60")
 root.resizable(False,False)
 root.title("Welcome to ITI bank")
 
-IDLabel=tkinter.Label(text="Please enter your ID").place(x=20, y=20)
+IDLabel=tkinter.Label(root,text="Please enter your ID")
+IDLabel.place(x=20, y=20)
 enteredID=tkinter.Entry(root,text=20)
 enteredID.place(x=50, y=50)
 
