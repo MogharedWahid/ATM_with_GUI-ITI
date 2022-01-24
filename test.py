@@ -40,6 +40,7 @@ def check_password(client_id):
 		myDict[client_id]['Locked']=1
 		return 0
 		
+
 #function that display balance
 def check_id_gui():
 	client_id=int(enteredID.get())
