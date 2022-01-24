@@ -3,6 +3,7 @@
 #*********************************  ATM project - ITI  **********************************/
 #****************************************************************************************/
 
+from distutils import command
 import tkinter
 
 #My client_ids List
@@ -28,9 +29,18 @@ def check_id(client_id):
 
 #function that show password field
 def show_password_field():
+	global enteredPass
 	nameLabel=tkinter.Label(text="Please enter your password").place(x=20, y=80)
 	enteredPass=tkinter.Entry(root,show='*')
 	enteredPass.place(x=50, y=100)
+	# Enter_Button.update(root,text="balabezo")
+	# Enter_Button['command'] = test
+
+	# Enter_Button2=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='black',command=check_id_gui)
+def test():
+	print("moaz")
+	
+
 
 #function that show invalid ID
 def show_invalidID_field():
@@ -59,6 +69,9 @@ def check_id_gui():
 	idFlag=check_id(client_id)
 	if(idFlag==1):
 		show_password_field()
+		client_password=int(float(enteredPass.get()))
+		#if(check_password(client_password)):
+
 	else:
 		show_invalidID_field()
 
@@ -70,10 +83,10 @@ root.geometry("1000x720+250+60")
 root.resizable(False,False)
 root.title("Welcome to ITI bank")
 
-IDLabel=tkinter.Label(text="Please enter your ID").place(x=20, y=20)
+IDLabel=tkinter.Label(root,text="Please enter your ID")
+IDLabel.place(x=20, y=20)
 enteredID=tkinter.Entry(root,text=20)
 enteredID.place(x=50, y=50)
-
 
 
 Enter_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='black',command=check_id_gui)
