@@ -51,10 +51,10 @@ def check_id_gui():
 		enteredPass=tkinter.Entry(root,show='*')
 		enteredPass.place(x=50, y=100)
 	else:
-		print("false")
-	# 	print("Welcome "+myDict[client_id]['Name'])
-	# print("End")
-	# print(myDict[client_id]['Locked'])
+		topLevelVar=tkinter.Toplevel()
+		topLevelVar.configure(bg='red')
+		topLevelVar.geometry("300x300+600+350")
+		tkinter.Label(topLevelVar, text='Invalid ID !').place(x=70,y=120)
 
 
 #main program
