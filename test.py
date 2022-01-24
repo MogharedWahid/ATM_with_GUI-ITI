@@ -16,7 +16,7 @@ myDict={215321701332:{'Name':'Ahmed Abdelrazek','Password':1783 ,'Balance':35001
 		203366789564:{'Name':'Mina Sameh'	   ,'Password':1179 ,'Balance':18000   ,'Locked':0},
 		201236787812:{'Name':'Omnia Ahmed'	   ,'Password':1430 ,'Balance':180350  ,'Locked':0}}
 
-global attempts
+
 attempts=3
 #function that checks whether it's on the system or not
 def check_id(client_id):
@@ -33,6 +33,7 @@ def check_id(client_id):
 def show_password_field():
 	global passLabel
 	global passAttempts
+	global attempts
 	passLabel=tkinter.Label(text="Please enter your password")
 	passLabel.place(x=20, y=80)
 	passAttempts=tkinter.Label(text=str(attempts)+" attempts left")
@@ -54,21 +55,27 @@ def show_invalidPass_field():
 	topLevelVar=tkinter.Toplevel()
 	topLevelVar.configure(bg='red')
 	topLevelVar.geometry("300x300+600+350")
-	tkinter.Label(topLevelVar, text='Invalid Password !').place(x=70,y=120)
+	tkinter.Label(topLevelVar, text='Your account has been blocked !').place(x=70,y=120)
 
 #function that checks the entered password
 def check_password(client_id,client_pass):
-	# while password != myDict[client_id]['Password'] and attempts<3:
-	# 	password=int(input("Enter your password:"))
-	# 	attempts+=1
-	# 	if(password != myDict[client_id]['Password']):
-	# 		print("Wrong password, ",end=' ')
-	# if(password == myDict[client_id]['Password'] and attempts <= 3 ):
-	# 	return 1
-	# else:
-	# 	myDict[client_id]['Locked']=1
-	# 	return 0
-	return 1
+	global attempts
+	if(client_pass == myDict[client_id]['Password']):
+		return 1
+	elif(attempts == 1):
+		Enter_Button.destroy()
+		myDict[client_id]['Locked'] = 1
+		show_invalidPass_field()
+	else:
+		attempts -= 1
+		passAttempts.configure(text="Wrong password "+str(attempts) + " attempts left")
+
+  		
+  		
+  		
+ 
+  	
+
 		
 def check_password_gui():
 	client_pass = int(enteredPass.get())
@@ -99,8 +106,7 @@ def check_password_gui():
 			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Arial", 25))
 			welcomeLabel.place(x=200, y=100)
 			
-	else:
-		show_invalidPass_field()
+	
 
 
   			
