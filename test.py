@@ -47,6 +47,9 @@ def check_id_gui():
 	if(idFlag==1):
 		# passFlag=check_password(client_id)
 		print("true")
+		nameLabel=tkinter.Label(text="Please enter your password").place(x=20, y=80)
+		enteredPass=tkinter.Entry(root,show='*')
+		enteredPass.place(x=50, y=100)
 	else:
 		print("false")
 	# 	print("Welcome "+myDict[client_id]['Name'])
@@ -65,9 +68,7 @@ IDLabel=tkinter.Label(text="Please enter your ID").place(x=20, y=20)
 enteredID=tkinter.Entry(root,text=20)
 enteredID.place(x=50, y=50)
 
-# nameLabel=tkinter.Label(text="Please enter your password").place(x=20, y=80)
-# enteredPass=tkinter.Entry(root,show='*')
-# enteredPass.place(x=50, y=100)
+
 
 Enter_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='black',command=check_id_gui)
 Close_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='red',fg='black',command=root.destroy)
