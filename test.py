@@ -88,16 +88,16 @@ def check_password_gui():
 			cashWithdraw=tkinter.Button(root,height=3,width=15,text="Cash Withdraw",font=("Arial", 15),bg='black',fg='white',command=show_cash_field)
 			cashWithdraw.place(x=800,y=100)
 
-			balanceInquiry=tkinter.Button(root,height=3,width=15,text="Balance Inquiry",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
+			balanceInquiry=tkinter.Button(root,height=3,width=15,text="Balance Inquiry",font=("Arial", 15),bg='black',fg='white',command=show_balance)
 			balanceInquiry.place(x=800,y=200)
 
-			passwordChange=tkinter.Button(root,height=3,width=15,text="Password Change",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
+			passwordChange=tkinter.Button(root,height=3,width=15,text="Password Change",font=("Arial", 15),bg='black',fg='white',command=show_change_password)
 			passwordChange.place(x=800,y=300)
 
 			fawryService=tkinter.Button(root,height=3,width=15,text="Fawry Service",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
 			fawryService.place(x=800,y=400)
 
-			exit=tkinter.Button(root,height=3,width=15,text="Exit",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
+			exit=tkinter.Button(root,height=3,width=15,text="Exit",font=("Arial", 15),bg='black',fg='white',command=root.destroy)
 			exit.place(x=800,y=500)
 
 			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Times new roman", 30))
@@ -141,11 +141,11 @@ def show_cash_field():
 	enteredCash=tkinter.Entry(root,width=30)
 	enteredCash.place(x=260, y=240)
 	Enter2_Button.configure(command=cash_check)
-	maxTransaction=tkinter.Label(text="- Max. trasnaction is 5000 L.E, re-enter your amount",fg='red')
+	maxTransaction=tkinter.Label(text="- Max. trasnaction is 5000 L.E !",fg='black')
 	maxTransaction.place(x=250, y=270)
-	multipleHundred=tkinter.Label(text="- The allowed values are only multiple of 100 L.E",fg='red')
+	multipleHundred=tkinter.Label(text="- The allowed values are only multiples of 100 L.E !",fg='black')
 	multipleHundred.place(x=250, y=290)
-	noSufficient=tkinter.Label(text="- No Sufficient balance for transaction !",fg='red')
+	noSufficient=tkinter.Label(text="- Balance should be more than your amount !",fg='black')
 	noSufficient.place(x=250, y=310)
 
 
@@ -178,19 +178,80 @@ def cash_check():
 		ATM_Actuator_Out()
 		myDict[client_id]['Balance']-=client_entered_cash
 		topLevelTransaction=tkinter.Toplevel()
-		topLevelTransaction.geometry("300x300+600+350")
-		tkinter.Label(topLevelTransaction, text='Transaction done. Thank you :)',fg='green').place(x=70,y=120)
+		Return=tkinter.Button
+		topLevelTransaction.geometry("300x250+600+350")
+		tkinter.Label(topLevelTransaction, text='Transaction done. Thank you :)',fg='green').place(x=70,y=100)
+		ReturnButton=tkinter.Button(topLevelTransaction, text='Return',fg='white',bg='black',command=topLevelTransaction.destroy)
+		ReturnButton.place(x=125,y=150)
 	
-#Cash withdraw function (HW part)
+# Cash withdraw function (HW part)
 def ATM_Actuator_Out():
 	print("ATM Actuatuor Out")
 
-#show balance
-# def show_balance():
+# Show balance function
+def show_balance():
+	topLevelBalance=tkinter.Toplevel()
+	Return=tkinter.Button
+	topLevelBalance.geometry("300x250+600+350")
+	tkinter.Label(topLevelBalance, text='Your balance is '+str(myDict[client_id]['Balance'])+' L.E',fg='green').place(x=70,y=100)
+	ReturnButton=tkinter.Button(topLevelBalance, text='Return',fg='white',bg='black',command=topLevelBalance.destroy)
+	ReturnButton.place(x=125,y=150)
 	
 
+# Show change password function
+def show_change_password():
+	global passMatch
+	global passLen
+	passMatch=0
+	passLen=0
+	global passCondition1
+	global passCondition2
+	global enteredPass1
+	global enteredPass2
+	global topLevelPassword
+	topLevelPassword=tkinter.Toplevel()
+	Return=tkinter.Button
+	topLevelPassword.geometry("300x250+600+350")
+	PassLabel=tkinter.Label(topLevelPassword,text="Enter new password   ",font=("Arial", 10))
+	PassLabel.place(x=20, y=30)
+	enteredPass1=tkinter.Entry(topLevelPassword,width=10,show='*')
+	enteredPass1.place(x=170, y=32)
+	PassLabe2=tkinter.Label(topLevelPassword,text="Re-enter new password",font=("Arial", 10))
+	PassLabe2.place(x=20, y=55)
+	enteredPass2=tkinter.Entry(topLevelPassword,width=10,show='*')
+	enteredPass2.place(x=170, y=57)
+	ReturnButton=tkinter.Button(topLevelPassword, text='Confirm',fg='white',bg='black',command=check_change_password)
+	ReturnButton.place(x=125,y=175)
+	passCondition1=tkinter.Label(topLevelPassword,text="- Password should be four digits !",fg='black')
+	passCondition1.place(x=30, y=100)
+	passCondition2=tkinter.Label(topLevelPassword,text="- The two passwords should match !",fg='black')
+	passCondition2.place(x=30, y=120)
+
+def check_change_password():
+	if (len(enteredPass1.get())==4):
+		if(len(enteredPass2.get())==4):
+			passLen=1
+			passCondition1.configure(fg='green')
+		else:
+			passLen=0
+			passCondition1.configure(fg='red')
+	else:
+		passLen=0
+		passCondition1.configure(fg='red')
+	
+	if((enteredPass1.get()) == (enteredPass2.get())):
+		passMatch=1
+		passCondition2.configure(fg='green')
+	else:
+		passMatch=0
+		passCondition2.configure(fg='red')
+	if (passMatch==1 and passLen==1):
+		myDict[client_id]['Password']=enteredPass1.get()
+		topLevelPassword.destroy()
+		
+
 #main program
-# Window Configuration
+# Main Window Configuration
 root= tkinter.Tk()
 root.geometry("1000x720+250+60")
 root.resizable(False,False)
