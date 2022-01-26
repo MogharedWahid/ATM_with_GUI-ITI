@@ -1,9 +1,11 @@
-#**********************************  Moghared Wahid  ************************************/
-#******************************  mogharedwahid@gmail.com  *******************************/
-#*********************************  ATM project - ITI  **********************************/
-#****************************************************************************************/
+#***********************************************************************************#
+#*************************| Author	  : Moghared Wahid           |******************#
+#*************************|  Email	  : mogharedwahid@gmail.com  |******************#
+#*************************|  Project  : ATM - ITI  			     |******************#
+#***********************************************************************************#
 
 from distutils import command
+from faulthandler import disable
 import tkinter
 
 #My client_ids List
@@ -34,13 +36,13 @@ def show_password_field():
 	global passLabel
 	global passAttempts
 	global attempts
-	passLabel=tkinter.Label(text="Please enter your password")
-	passLabel.place(x=20, y=80)
+	passLabel=tkinter.Label(text="Please enter your password",font=("Arial", 15))
+	passLabel.place(x=390, y=260)
 	passAttempts=tkinter.Label(text=str(attempts)+" attempts left")
-	passAttempts.place(x=50, y=120)
+	passAttempts.place(x=395, y=315)
 	global enteredPass
-	enteredPass=tkinter.Entry(root,show='*')
-	enteredPass.place(x=50, y=100)
+	enteredPass=tkinter.Entry(root,width=30,show='*')
+	enteredPass.place(x=395, y=295)
 	Enter_Button.configure(command=check_password_gui)
 
 #function that show invalid ID
@@ -71,13 +73,8 @@ def check_password(client_id,client_pass):
 		passAttempts.configure(text="Wrong password "+str(attempts) + " attempts left")
 
   		
-  		
-  		
- 
-  	
-
-		
 def check_password_gui():
+	global Enter2_Button
 	client_pass = int(enteredPass.get())
 	if(check_password(client_id,client_pass)):
 			Enter_Button.destroy()
@@ -88,30 +85,31 @@ def check_password_gui():
 			enteredPass.destroy()
 			passAttempts.destroy()
 
-			cashWithdraw=tkinter.Button(root,height=5,width=20,text="Cash Withdraw",bg='black',fg='white',command=check_id_gui)
+			cashWithdraw=tkinter.Button(root,height=3,width=15,text="Cash Withdraw",font=("Arial", 15),bg='black',fg='white',command=show_cash_field)
 			cashWithdraw.place(x=800,y=100)
 
-			balanceInquiry=tkinter.Button(root,height=5,width=20,text="Balance Inquiry",bg='black',fg='white',command=check_id_gui)
+			balanceInquiry=tkinter.Button(root,height=3,width=15,text="Balance Inquiry",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
 			balanceInquiry.place(x=800,y=200)
 
-			passwordChange=tkinter.Button(root,height=5,width=20,text="Password Change",bg='black',fg='white',command=check_id_gui)
+			passwordChange=tkinter.Button(root,height=3,width=15,text="Password Change",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
 			passwordChange.place(x=800,y=300)
 
-			fawryService=tkinter.Button(root,height=5,width=20,text="Fawry Service",bg='black',fg='white',command=check_id_gui)
+			fawryService=tkinter.Button(root,height=3,width=15,text="Fawry Service",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
 			fawryService.place(x=800,y=400)
 
-			exit=tkinter.Button(root,height=5,width=20,text="Exit",bg='black',fg='white',command=check_id_gui)
+			exit=tkinter.Button(root,height=3,width=15,text="Exit",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
 			exit.place(x=800,y=500)
 
-			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Arial", 25))
-			welcomeLabel.place(x=200, y=100)
-			
-	
+			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Times new roman", 30))
+			welcomeLabel.place(x=135, y=80)
+
+			Enter2_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white')
+			Cancel_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='crimson',fg='white')
+
+			Enter2_Button.place(x=600,y=600)
+			Cancel_Button.place(x=100,y=600)
 
 
-  			
-			  	
-#function that display balance
 def check_id_gui():
   global client_id
   client_id = int(enteredID.get())
@@ -120,8 +118,76 @@ def check_id_gui():
     show_password_field()
   else:
     show_invalidID_field()
-  
 
+#Cash withdraw show and check
+def show_cash_field():
+
+	global cashLabel
+	global maxTransaction
+	global multipleHundred
+	global noSufficient
+
+	global maxTrans
+	global multipleHund
+	global noSufficin
+	
+
+	maxTrans=0
+	multipleHund=0
+	noSufficin=0
+	cashLabel=tkinter.Label(root,text="Please enter cash amount",font=("Arial", 15))
+	cashLabel.place(x=250, y=200)
+	global enteredCash
+	enteredCash=tkinter.Entry(root,width=30)
+	enteredCash.place(x=260, y=240)
+	Enter2_Button.configure(command=cash_check)
+	maxTransaction=tkinter.Label(text="- Max. trasnaction is 5000 L.E, re-enter your amount",fg='red')
+	maxTransaction.place(x=250, y=270)
+	multipleHundred=tkinter.Label(text="- The allowed values are only multiple of 100 L.E",fg='red')
+	multipleHundred.place(x=250, y=290)
+	noSufficient=tkinter.Label(text="- No Sufficient balance for transaction !",fg='red')
+	noSufficient.place(x=250, y=310)
+
+
+def cash_check():
+	client_entered_cash = int(enteredCash.get())
+	if (client_entered_cash<5000):
+		maxTrans=1
+		maxTransaction.configure(fg='green')
+	else:
+		maxTrans = 0
+		maxTransaction.configure(fg='red')
+	if (client_entered_cash%100 ==0):
+		multipleHund=1
+		multipleHundred.configure(fg='green')
+	else:
+		multipleHund=0
+		multipleHundred.configure(fg='red')
+	if (myDict[client_id]['Balance']>client_entered_cash):
+		noSufficin=1
+		noSufficient.configure(fg='green')
+	else:
+		noSufficin=0
+		noSufficient.configure(fg='red')
+	if (maxTrans==1 and multipleHund==1 and noSufficin==1):
+		cashLabel.destroy()
+		enteredCash.destroy()
+		maxTransaction.destroy()
+		multipleHundred.destroy()
+		noSufficient.destroy()
+		ATM_Actuator_Out()
+		myDict[client_id]['Balance']-=client_entered_cash
+		topLevelTransaction=tkinter.Toplevel()
+		topLevelTransaction.geometry("300x300+600+350")
+		tkinter.Label(topLevelTransaction, text='Transaction done. Thank you :)',fg='green').place(x=70,y=120)
+	
+#Cash withdraw function (HW part)
+def ATM_Actuator_Out():
+	print("ATM Actuatuor Out")
+
+#show balance
+# def show_balance():
+	
 
 #main program
 # Window Configuration
@@ -130,14 +196,14 @@ root.geometry("1000x720+250+60")
 root.resizable(False,False)
 root.title("Welcome to ITI bank")
 
-IDLabel=tkinter.Label(root,text="Please enter your ID")
-IDLabel.place(x=20, y=20)
-enteredID=tkinter.Entry(root,text=20)
-enteredID.place(x=50, y=50)
+IDLabel=tkinter.Label(root,text="Please enter your ID",font=("Arial", 15)) #middle position
+IDLabel.place(x=390, y=200)
+enteredID=tkinter.Entry(root,width=30,text=40)
+enteredID.place(x=395, y=230)
 
 
-Enter_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='black',command=check_id_gui)
-Close_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='red',fg='black',command=root.destroy)
+Enter_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white',command=check_id_gui)
+Close_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='crimson',fg='white',command=root.destroy)
 
 Enter_Button.place(x=900,y=670)
 Close_Button.place(x=20,y=670)
