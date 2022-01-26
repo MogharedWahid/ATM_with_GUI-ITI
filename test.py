@@ -19,6 +19,29 @@ myDict={215321701332:{'Name':'Ahmed Abdelrazek','Password':1783 ,'Balance':35001
 		201236787812:{'Name':'Omnia Ahmed'	   ,'Password':1430 ,'Balance':180350  ,'Locked':0}}
 
 
+def Back_to_entery():
+	cashWithdraw.destroy()
+	balanceInquiry.destroy()
+	passwordChange.destroy()
+	fawryService.destroy()
+	exit.destroy()
+	Enter2_Button.destroy()
+	Cancel_Button.destroy()
+	welcomeLabel.destroy()
+	Entry_point()
+
+
+def Entry_point():
+	global IDLabel
+	global enteredID
+	global Enter_Button
+	IDLabel=tkinter.Label(root,text="Please enter your ID",font=("Arial", 15)) #middle position
+	IDLabel.place(x=390, y=200)
+	enteredID=tkinter.Entry(root,width=30,text=40)
+	enteredID.place(x=395, y=230)
+	Enter_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white',command=check_id_gui)
+	Enter_Button.place(x=900,y=670)
+
 attempts=3
 #function that checks whether it's on the system or not
 def check_id(client_id):
@@ -55,9 +78,8 @@ def show_invalidID_field():
 #function that show invalid ID
 def show_invalidPass_field():
 	topLevelVar=tkinter.Toplevel()
-	topLevelVar.configure(bg='red')
-	topLevelVar.geometry("300x300+600+350")
-	tkinter.Label(topLevelVar, text='Your account has been blocked !').place(x=70,y=120)
+	topLevelVar.geometry("300x250+600+350")
+	tkinter.Label(topLevelVar, text='Your account has been blocked !',font=("Arial", 15),fg='red').place(x=67,y=100)
 
 #function that checks the entered password
 def check_password(client_id,client_pass):
@@ -65,7 +87,6 @@ def check_password(client_id,client_pass):
 	if(client_pass == myDict[client_id]['Password']):
 		return 1
 	elif(attempts == 1):
-		Enter_Button.destroy()
 		myDict[client_id]['Locked'] = 1
 		show_invalidPass_field()
 	else:
@@ -74,35 +95,49 @@ def check_password(client_id,client_pass):
 
   		
 def check_password_gui():
+	global cashWithdraw
+	global balanceInquiry
+	global passwordChange
+	global fawryService
+	global exit
 	global Enter2_Button
+	global Cancel_Button
+	global welcomeLabel
 	client_pass = int(enteredPass.get())
 	if(check_password(client_id,client_pass)):
 			Enter_Button.destroy()
-			Close_Button.destroy()
 			IDLabel.destroy()
 			passLabel.destroy()
 			enteredID.destroy()
 			enteredPass.destroy()
 			passAttempts.destroy()
 
+			global cashWithdraw
 			cashWithdraw=tkinter.Button(root,height=3,width=15,text="Cash Withdraw",font=("Arial", 15),bg='black',fg='white',command=show_cash_field)
 			cashWithdraw.place(x=800,y=100)
 
+			global balanceInquiry
 			balanceInquiry=tkinter.Button(root,height=3,width=15,text="Balance Inquiry",font=("Arial", 15),bg='black',fg='white',command=show_balance)
 			balanceInquiry.place(x=800,y=200)
-
+			
+			global passwordChange
 			passwordChange=tkinter.Button(root,height=3,width=15,text="Password Change",font=("Arial", 15),bg='black',fg='white',command=show_change_password)
 			passwordChange.place(x=800,y=300)
 
+			global fawryService
 			fawryService=tkinter.Button(root,height=3,width=15,text="Fawry Service",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
 			fawryService.place(x=800,y=400)
 
-			exit=tkinter.Button(root,height=3,width=15,text="Exit",font=("Arial", 15),bg='black',fg='white',command=root.destroy)
+			global exit
+			exit=tkinter.Button(root,height=3,width=15,text="Exit",font=("Arial", 15),bg='black',fg='white',command=Back_to_entery)
 			exit.place(x=800,y=500)
 
+			global welcomeLabel
 			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Times new roman", 30))
 			welcomeLabel.place(x=135, y=80)
 
+			global Enter2_Button
+			global Cancel_Button
 			Enter2_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white')
 			Cancel_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='crimson',fg='white')
 
@@ -193,7 +228,7 @@ def show_balance():
 	topLevelBalance=tkinter.Toplevel()
 	Return=tkinter.Button
 	topLevelBalance.geometry("300x250+600+350")
-	tkinter.Label(topLevelBalance, text='Your balance is '+str(myDict[client_id]['Balance'])+' L.E',fg='green').place(x=70,y=100)
+	tkinter.Label(topLevelBalance, text='Your balance is '+str(myDict[client_id]['Balance'])+' L.E',font=("Arial", 10)).place(x=70,y=100)
 	ReturnButton=tkinter.Button(topLevelBalance, text='Return',fg='white',bg='black',command=topLevelBalance.destroy)
 	ReturnButton.place(x=125,y=150)
 	
@@ -246,7 +281,7 @@ def check_change_password():
 		passMatch=0
 		passCondition2.configure(fg='red')
 	if (passMatch==1 and passLen==1):
-		myDict[client_id]['Password']=enteredPass1.get()
+		myDict[client_id]['Password']=int(enteredPass1.get())
 		topLevelPassword.destroy()
 		
 
@@ -257,19 +292,7 @@ root.geometry("1000x720+250+60")
 root.resizable(False,False)
 root.title("Welcome to ITI bank")
 
-IDLabel=tkinter.Label(root,text="Please enter your ID",font=("Arial", 15)) #middle position
-IDLabel.place(x=390, y=200)
-enteredID=tkinter.Entry(root,width=30,text=40)
-enteredID.place(x=395, y=230)
-
-
-Enter_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white',command=check_id_gui)
-Close_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='crimson',fg='white',command=root.destroy)
-
-Enter_Button.place(x=900,y=670)
-Close_Button.place(x=20,y=670)
-
-
+Entry_point()
 
 root.mainloop()
 
