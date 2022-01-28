@@ -1,11 +1,12 @@
 #***********************************************************************************#
-#*************************| Author	  : Moghared Wahid           |******************#
+#*************************|  Author	  : Moghared Wahid           |******************#
 #*************************|  Email	  : mogharedwahid@gmail.com  |******************#
 #*************************|  Project  : ATM - ITI  			     |******************#
 #***********************************************************************************#
 
 from distutils import command
 from faulthandler import disable
+from random import vonmisesvariate
 import tkinter
 
 #My client_ids List
@@ -125,7 +126,7 @@ def check_password_gui():
 			passwordChange.place(x=800,y=300)
 
 			global fawryService
-			fawryService=tkinter.Button(root,height=3,width=15,text="Fawry Service",font=("Arial", 15),bg='black',fg='white',command=check_id_gui)
+			fawryService=tkinter.Button(root,height=3,width=15,text="Fawry Service",font=("Arial", 15),bg='black',fg='white',command=fawry)
 			fawryService.place(x=800,y=400)
 
 			global exit
@@ -139,7 +140,7 @@ def check_password_gui():
 			global Enter2_Button
 			global Cancel_Button
 			Enter2_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white')
-			Cancel_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='crimson',fg='white')
+			Cancel_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='crimson',fg='white',command=close_withdraw)
 
 			Enter2_Button.place(x=600,y=600)
 			Cancel_Button.place(x=100,y=600)
@@ -183,6 +184,12 @@ def show_cash_field():
 	noSufficient=tkinter.Label(text="- Balance should be more than your amount !",fg='black')
 	noSufficient.place(x=250, y=310)
 
+def close_withdraw():
+	cashLabel.destroy()
+	enteredCash.destroy()
+	maxTransaction.destroy()
+	multipleHundred.destroy()
+	noSufficient.destroy()
 
 def cash_check():
 	client_entered_cash = int(enteredCash.get())
@@ -283,7 +290,152 @@ def check_change_password():
 	if (passMatch==1 and passLen==1):
 		myDict[client_id]['Password']=int(enteredPass1.get())
 		topLevelPassword.destroy()
-		
+
+
+def fawry():
+	global Vo
+	Vo=0
+	global Or
+	Or=0
+	global Et
+	Et=0
+	global We
+	We=0
+	global topLevelFawry
+	topLevelFawry=tkinter.Toplevel()
+	topLevelFawry.geometry("300x250+600+350")
+	PassLabel=tkinter.Label(topLevelFawry,text="Choose your network:",font=("Arial", 10))
+	PassLabel.place(x=15, y=10)
+	Vodafone=tkinter.Button(topLevelFawry,height=1,width=6,text="Vodafone",font=("Arial", 10),bg='white',fg='red',command=vodafone_chosen)
+	Vodafone.place(x=15,y=40)
+	Etisalat=tkinter.Button(topLevelFawry,height=1,width=6,text="Etisalat",font=("Arial", 10),bg='white',fg='green',command=etisalat_chosen)
+	Etisalat.place(x=85,y=40)
+	Orange=tkinter.Button(topLevelFawry,height=1,width=6,text="Orange",font=("Arial", 10),bg='white',fg='orange',command=orange_chosen)
+	Orange.place(x=155,y=40)
+	We=tkinter.Button(topLevelFawry,height=1,width=6,text="We",font=("Arial", 10),bg='white',fg='purple',command=we_chosen)
+	We.place(x=225,y=40)
+	confirmButton=tkinter.Button(topLevelFawry, text='Confirm',fg='white',bg='black',command=check_fawry)
+	confirmButton.place(x=200,y=190)
+	cancelButton=tkinter.Button(topLevelFawry, text='Cancel',fg='white',bg='black',command=topLevelFawry.destroy)
+	cancelButton.place(x=70,y=190)
+
+def vodafone_chosen():
+	global Vo
+	Vo=1
+	global enteredcashV 
+	global enterednumV 
+	vodafone_Label=tkinter.Label(topLevelFawry,text="Enter your phone number :",font=("Arial", 10))
+	vodafone_Label.place(x=15, y=70)
+	vodafone_initial=tkinter.Label(topLevelFawry,text="010",font=("Arial", 10))
+	vodafone_initial.place(x=70, y=90)
+	enterednumV=tkinter.Entry(topLevelFawry,width=8)
+	enterednumV.place(x=95, y=91)
+	cashV_Label=tkinter.Label(topLevelFawry,text="Enter recharge amount :",font=("Arial", 10))
+	cashV_Label.place(x=15, y=110)
+	enteredcashV=tkinter.Entry(topLevelFawry,width=8)
+	enteredcashV.place(x=95, y=130)
+
+def etisalat_chosen():
+	global Et
+	Et=1
+	global enteredcashEt 
+	global enterednumEt
+	etisalat_Label=tkinter.Label(topLevelFawry,text="Enter your phone number :",font=("Arial", 10))
+	etisalat_Label.place(x=15, y=70)
+	etisalat_initial=tkinter.Label(topLevelFawry,text="011")
+	etisalat_initial.place(x=70, y=90)
+	enterednumEt=tkinter.Entry(topLevelFawry,width=8)
+	enterednumEt.place(x=95, y=91)
+	cashEt_Label=tkinter.Label(topLevelFawry,text="Enter recharge amount :",font=("Arial", 10))
+	cashEt_Label.place(x=15, y=110)
+	enteredcashEt=tkinter.Entry(topLevelFawry,width=8)
+	enteredcashEt.place(x=95, y=130)
+
+def orange_chosen():
+	global Or
+	Or=1
+	global enteredcashOr
+	global enterednumOr
+	orange_Label=tkinter.Label(topLevelFawry,text="Enter your phone number :",font=("Arial", 10))
+	orange_Label.place(x=15, y=70)
+	orange_initial=tkinter.Label(topLevelFawry,text="012")
+	orange_initial.place(x=70, y=90)
+	enterednumOr=tkinter.Entry(topLevelFawry,width=8)
+	enterednumOr.place(x=95, y=91)
+	cashOr_Label=tkinter.Label(topLevelFawry,text="Enter recharge amount :",font=("Arial", 10))
+	cashOr_Label.place(x=15, y=110)
+	enteredcashOr=tkinter.Entry(topLevelFawry,width=8)
+	enteredcashOr.place(x=95, y=130)
+	
+
+def we_chosen():
+	global We
+	We=1
+	global enteredcashWe
+	global enterednumWe
+	we_Label=tkinter.Label(topLevelFawry,text="Enter your phone number :",font=("Arial", 10))
+	we_Label.place(x=15, y=70)
+	we_initial=tkinter.Label(topLevelFawry,text="015")
+	we_initial.place(x=70, y=90)
+	enterednumWe=tkinter.Entry(topLevelFawry,width=8)
+	enterednumWe.place(x=95, y=91)
+	cashWe_Label=tkinter.Label(topLevelFawry,text="Enter recharge amount :",font=("Arial", 10))
+	cashWe_Label.place(x=15, y=110)
+	enteredcashWe=tkinter.Entry(topLevelFawry,width=8)
+	enteredcashWe.place(x=95, y=130)
+
+def check_fawry():
+	global Vo
+	global We
+	global Or
+	global Et
+	if (Vo==1):
+		if (len(enterednumV.get()) == 8 and (int(enteredcashV.get())) < myDict[client_id]['Balance']):
+			myDict[client_id]['Balance']-=(int(enteredcashV.get()))
+			Vo=0
+			topLevelFawry.destroy()
+		if (len(enterednumV.get()) != 8):
+			numV=tkinter.Label(topLevelFawry,text="Invalid phone number !",fg='red')
+			numV.place(x=15, y=150)
+		if ((int(enteredcashV.get())) > myDict[client_id]['Balance']):
+			cashV=tkinter.Label(topLevelFawry,text="Not enough balance !",fg='red')
+			cashV.place(x=15, y=165)
+
+	elif (Et==1):
+		if (len(enterednumEt.get()) == 8 and (int(enteredcashEt.get())) < myDict[client_id]['Balance']):
+			myDict[client_id]['Balance']-=(int(enteredcashEt.get()))
+			Et=0
+			topLevelFawry.destroy()
+		if (len(enterednumEt.get()) != 8):
+			numEt=tkinter.Label(topLevelFawry,text="Invalid phone number !",fg='red')
+			numEt.place(x=15, y=150)
+		if ((int(enteredcashEt.get())) > myDict[client_id]['Balance']):
+			cashEt=tkinter.Label(topLevelFawry,text="Not enough balance !",fg='red')
+			cashEt.place(x=15, y=165)
+	elif (Or==1):
+		if (len(enterednumOr.get()) == 8 and (int(enteredcashOr.get())) < myDict[client_id]['Balance']):
+			myDict[client_id]['Balance']-=(int(enteredcashOr.get()))
+			Or=0
+			topLevelFawry.destroy()
+		if (len(enterednumOr.get()) != 8):
+			numOr=tkinter.Label(topLevelFawry,text="Invalid phone number !",fg='red')
+			numOr.place(x=15, y=150)
+		if ((int(enteredcashOr.get())) > myDict[client_id]['Balance']):
+			cashV=tkinter.Label(topLevelFawry,text="Not enough balance !",fg='red')
+			cashV.place(x=15, y=165)
+	elif (We==1):
+		if (len(enterednumWe.get()) == 8 and (int(enteredcashWe.get())) < myDict[client_id]['Balance']):
+			myDict[client_id]['Balance']-=(int(enteredcashWe.get()))
+			We=0
+			topLevelFawry.destroy()
+		if (len(enterednumWe.get()) != 8):
+			numWe=tkinter.Label(topLevelFawry,text="Invalid phone number !",fg='red')
+			numWe.place(x=15, y=150)
+		if ((int(enteredcashWe.get())) > myDict[client_id]['Balance']):
+			cashWe=tkinter.Label(topLevelFawry,text="Not enough balance !",fg='red')
+			cashWe.place(x=15, y=165)
+
+
 
 #main program
 # Main Window Configuration
