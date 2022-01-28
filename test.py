@@ -10,7 +10,7 @@ from random import vonmisesvariate
 import tkinter
 
 #My client_ids List
-myDict={215321701332:{'Name':'Ahmed Abdelrazek','Password':1783 ,'Balance':3500166 ,'Locked':0},
+myDict={215321701332:{'Name':'Moghared Wahid'  ,'Password':1783 ,'Balance':3500166 ,'Locked':0},
 		203659302214:{'Name':'Salma Mohamed'   ,'Password':1390 ,'Balance':520001  ,'Locked':0},
 		126355700193:{'Name':'Adel Khaled'	   ,'Password':1214 ,'Balance':111000  ,'Locked':0},
 		201455998011:{'Name':'Saeed Amin'	   ,'Password':2001 ,'Balance':1200    ,'Locked':0},
@@ -26,20 +26,28 @@ def Back_to_entery():
 	passwordChange.destroy()
 	fawryService.destroy()
 	exit.destroy()
-	Enter2_Button.destroy()
-	Cancel_Button.destroy()
 	welcomeLabel.destroy()
+	serviceLabel.destroy()
 	Entry_point()
 
+def destroy_entry():
+	IDLabel.destroy()
+	enteredID.destroy()
+	passLabel.destroy()
+	enteredPass.destroy()
+	passAttempts.destroy()
 
 def Entry_point():
+	global welcomeBank
+	welcomeBank=tkinter.Label(root,text="Welcome to ITI bank",font=("Times new roman", 40))
+	welcomeBank.place(x=250, y=80)
 	global IDLabel
 	global enteredID
 	global Enter_Button
 	IDLabel=tkinter.Label(root,text="Please enter your ID",font=("Arial", 15)) #middle position
-	IDLabel.place(x=390, y=200)
+	IDLabel.place(x=390, y=250)
 	enteredID=tkinter.Entry(root,width=30,text=40)
-	enteredID.place(x=395, y=230)
+	enteredID.place(x=395, y=280)
 	Enter_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white',command=check_id_gui)
 	Enter_Button.place(x=900,y=670)
 
@@ -48,8 +56,8 @@ attempts=3
 def check_id(client_id):
 	if(client_id in myDict):
 		if(myDict[client_id]['Locked']==1):
-			print("Sorry your account has been locked, please head to the bank")
-			return 0
+			#print("Sorry your account has been locked, please head to the bank")
+			return 2
 		else:
 			return 1
 	else:
@@ -61,26 +69,40 @@ def show_password_field():
 	global passAttempts
 	global attempts
 	passLabel=tkinter.Label(text="Please enter your password",font=("Arial", 15))
-	passLabel.place(x=390, y=260)
+	passLabel.place(x=390, y=310)
 	passAttempts=tkinter.Label(text=str(attempts)+" attempts left")
-	passAttempts.place(x=395, y=315)
+	passAttempts.place(x=395, y=365)
 	global enteredPass
 	enteredPass=tkinter.Entry(root,width=30,show='*')
-	enteredPass.place(x=395, y=295)
+	enteredPass.place(x=395, y=345)
 	Enter_Button.configure(command=check_password_gui)
 
 #function that show invalid ID
 def show_invalidID_field():
-	topLevelVar=tkinter.Toplevel()
-	topLevelVar.configure(bg='red')
-	topLevelVar.geometry("300x300+600+350")
-	tkinter.Label(topLevelVar, text='Invalid ID !').place(x=70,y=120)
+	topLevelID=tkinter.Toplevel()
+	topLevelID.geometry("300x250+600+350")
+	tkinter.Label(topLevelID, text='Invalid ID !',font=("Arial", 15),fg='red').place(x=100,y=100)
+	OKButton=tkinter.Button(topLevelID, text='Confirm',fg='white',bg='black',command=topLevelID.destroy)
+	OKButton.place(x=200,y=190)
+
 
 #function that show invalid ID
 def show_invalidPass_field():
 	topLevelVar=tkinter.Toplevel()
 	topLevelVar.geometry("300x250+600+350")
-	tkinter.Label(topLevelVar, text='Your account has been blocked !',font=("Arial", 15),fg='red').place(x=67,y=100)
+	tkinter.Label(topLevelVar, text='Your account has been blocked !',font=("Arial", 13),fg='red').place(x=20,y=100)
+	OKButton=tkinter.Button(topLevelVar, text='Confirm',fg='white',bg='black',command=topLevelVar.destroy)
+	OKButton.place(x=200,y=190)
+
+
+def show_Locked_field():
+	topLevelLocked=tkinter.Toplevel()
+	topLevelLocked.geometry("300x250+600+350")
+	tkinter.Label(topLevelLocked, text='Sorry your account has been locked !',font=("Arial", 13),fg='red').place(x=10,y=90)
+	tkinter.Label(topLevelLocked, text='Please head to the bank !',font=("Arial", 13),fg='red').place(x=50,y=120)
+	OKButton=tkinter.Button(topLevelLocked, text='Confirm',fg='white',bg='black',command=topLevelLocked.destroy)
+	OKButton.place(x=200,y=190)
+
 
 #function that checks the entered password
 def check_password(client_id,client_pass):
@@ -89,6 +111,8 @@ def check_password(client_id,client_pass):
 		return 1
 	elif(attempts == 1):
 		myDict[client_id]['Locked'] = 1
+		destroy_entry()
+		Entry_point()
 		show_invalidPass_field()
 	else:
 		attempts -= 1
@@ -112,51 +136,55 @@ def check_password_gui():
 			enteredID.destroy()
 			enteredPass.destroy()
 			passAttempts.destroy()
+			welcomeBank.destroy()
 
 			global cashWithdraw
 			cashWithdraw=tkinter.Button(root,height=3,width=15,text="Cash Withdraw",font=("Arial", 15),bg='black',fg='white',command=show_cash_field)
-			cashWithdraw.place(x=800,y=100)
+			cashWithdraw.place(x=270,y=280)
 
 			global balanceInquiry
 			balanceInquiry=tkinter.Button(root,height=3,width=15,text="Balance Inquiry",font=("Arial", 15),bg='black',fg='white',command=show_balance)
-			balanceInquiry.place(x=800,y=200)
+			balanceInquiry.place(x=600,y=280)
 			
 			global passwordChange
 			passwordChange=tkinter.Button(root,height=3,width=15,text="Password Change",font=("Arial", 15),bg='black',fg='white',command=show_change_password)
-			passwordChange.place(x=800,y=300)
+			passwordChange.place(x=270,y=380)
 
 			global fawryService
 			fawryService=tkinter.Button(root,height=3,width=15,text="Fawry Service",font=("Arial", 15),bg='black',fg='white',command=fawry)
-			fawryService.place(x=800,y=400)
+			fawryService.place(x=600,y=380)
 
 			global exit
-			exit=tkinter.Button(root,height=3,width=15,text="Exit",font=("Arial", 15),bg='black',fg='white',command=Back_to_entery)
-			exit.place(x=800,y=500)
+			exit=tkinter.Button(root,height=3,width=15,text="Exit",font=("Arial", 15),bg='black',fg='red',command=Back_to_entery)
+			exit.place(x=435,y=480)
 
 			global welcomeLabel
-			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Times new roman", 30))
-			welcomeLabel.place(x=135, y=80)
+			welcomeLabel=tkinter.Label(root,text="Welcome "+myDict[client_id]['Name'],font=("Times new roman", 40))
+			welcomeLabel.place(x=210, y=80)
 
-			global Enter2_Button
-			global Cancel_Button
-			Enter2_Button=tkinter.Button(root,height=2,width=10,text="Enter",bg='green',fg='white')
-			Cancel_Button=tkinter.Button(root,height=2,width=10,text="Cancel",bg='crimson',fg='white',command=close_withdraw)
-
-			Enter2_Button.place(x=600,y=600)
-			Cancel_Button.place(x=100,y=600)
+			global serviceLabel
+			serviceLabel=tkinter.Label(root,text="Choose your service :",font=("Times new roman", 15))
+			serviceLabel.place(x=425, y=200)
 
 
 def check_id_gui():
-  global client_id
-  client_id = int(enteredID.get())
-  idFlag=check_id(client_id)
-  if(idFlag):
-    show_password_field()
-  else:
-    show_invalidID_field()
+	global client_id
+	client_id = int(enteredID.get())
+	idFlag=check_id(client_id)
+	if(idFlag==1):
+		show_password_field()
+	elif(idFlag==0):
+		show_invalidID_field()
+	elif (idFlag==2):
+		destroy_entry()
+		Entry_point()
+		show_Locked_field()
 
 #Cash withdraw show and check
 def show_cash_field():
+	global topLevelWithdraw
+	topLevelWithdraw=tkinter.Toplevel()
+	topLevelWithdraw.geometry("300x250+600+350")
 
 	global cashLabel
 	global maxTransaction
@@ -166,23 +194,25 @@ def show_cash_field():
 	global maxTrans
 	global multipleHund
 	global noSufficin
-	
 
 	maxTrans=0
 	multipleHund=0
 	noSufficin=0
-	cashLabel=tkinter.Label(root,text="Please enter cash amount",font=("Arial", 15))
-	cashLabel.place(x=250, y=200)
+	cashLabel=tkinter.Label(topLevelWithdraw,text="Please enter cash amount :",font=("Arial", 10))
+	cashLabel.place(x=15, y=10)
 	global enteredCash
-	enteredCash=tkinter.Entry(root,width=30)
-	enteredCash.place(x=260, y=240)
-	Enter2_Button.configure(command=cash_check)
-	maxTransaction=tkinter.Label(text="- Max. trasnaction is 5000 L.E !",fg='black')
-	maxTransaction.place(x=250, y=270)
-	multipleHundred=tkinter.Label(text="- The allowed values are only multiples of 100 L.E !",fg='black')
-	multipleHundred.place(x=250, y=290)
-	noSufficient=tkinter.Label(text="- Balance should be more than your amount !",fg='black')
-	noSufficient.place(x=250, y=310)
+	enteredCash=tkinter.Entry(topLevelWithdraw,width=10)
+	enteredCash.place(x=30, y=40)
+	maxTransaction=tkinter.Label(topLevelWithdraw,text="- Max. trasnaction is 5000 L.E !",fg='black')
+	maxTransaction.place(x=15, y=70)
+	multipleHundred=tkinter.Label(topLevelWithdraw,text="- The allowed values are only multiples of 100 L.E !",fg='black')
+	multipleHundred.place(x=15, y=90)
+	noSufficient=tkinter.Label(topLevelWithdraw,text="- Balance should be more than your amount !",fg='black')
+	noSufficient.place(x=15, y=110)
+	confirmButton=tkinter.Button(topLevelWithdraw, text='Confirm',fg='white',bg='black',command=cash_check)
+	confirmButton.place(x=200,y=190)
+	cancelButton=tkinter.Button(topLevelWithdraw, text='Cancel',fg='white',bg='black',command=topLevelWithdraw.destroy)
+	cancelButton.place(x=70,y=190)
 
 def close_withdraw():
 	cashLabel.destroy()
@@ -193,7 +223,7 @@ def close_withdraw():
 
 def cash_check():
 	client_entered_cash = int(enteredCash.get())
-	if (client_entered_cash<5000):
+	if (client_entered_cash<=5000):
 		maxTrans=1
 		maxTransaction.configure(fg='green')
 	else:
@@ -212,6 +242,7 @@ def cash_check():
 		noSufficin=0
 		noSufficient.configure(fg='red')
 	if (maxTrans==1 and multipleHund==1 and noSufficin==1):
+		topLevelWithdraw.destroy()
 		cashLabel.destroy()
 		enteredCash.destroy()
 		maxTransaction.destroy()
@@ -237,7 +268,7 @@ def show_balance():
 	topLevelBalance.geometry("300x250+600+350")
 	tkinter.Label(topLevelBalance, text='Your balance is '+str(myDict[client_id]['Balance'])+' L.E',font=("Arial", 10)).place(x=70,y=100)
 	ReturnButton=tkinter.Button(topLevelBalance, text='Return',fg='white',bg='black',command=topLevelBalance.destroy)
-	ReturnButton.place(x=125,y=150)
+	ReturnButton.place(x=200,y=190)
 	
 
 # Show change password function
@@ -262,8 +293,10 @@ def show_change_password():
 	PassLabe2.place(x=20, y=55)
 	enteredPass2=tkinter.Entry(topLevelPassword,width=10,show='*')
 	enteredPass2.place(x=170, y=57)
-	ReturnButton=tkinter.Button(topLevelPassword, text='Confirm',fg='white',bg='black',command=check_change_password)
-	ReturnButton.place(x=125,y=175)
+	confirmButton=tkinter.Button(topLevelPassword, text='Confirm',fg='white',bg='black',command=check_change_password)
+	confirmButton.place(x=200,y=190)
+	cancelButton=tkinter.Button(topLevelPassword, text='Cancel',fg='white',bg='black',command=topLevelPassword.destroy)
+	cancelButton.place(x=70,y=190)
 	passCondition1=tkinter.Label(topLevelPassword,text="- Password should be four digits !",fg='black')
 	passCondition1.place(x=30, y=100)
 	passCondition2=tkinter.Label(topLevelPassword,text="- The two passwords should match !",fg='black')
