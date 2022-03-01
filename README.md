@@ -1,4 +1,4 @@
-   #ATM software with GUI that do the following:
+   # ATM software with GUI that do the following:
    
 1- The system first asks the user to enter his account number then click Enter
 2- If the account number is not identified by the system, the system would show an error message
