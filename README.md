@@ -1,4 +1,4 @@
-   # ATM software with GUI that do the following:
+# ATM software with GUI that do the following:
    
 1- The system first asks the user to enter his account number then click Enter
 2- If the account number is not identified by the system, the system would show an error message
@@ -17,7 +17,7 @@
    • Exit
    
    
-   #Cash Withdraw
+## Cash Withdraw
 1- When the user choose the cash withdraw system, the system would ask the user to enter the
    desired amount to withdraw, if the balance covers this amount of balance, the system would
    call the function “ATM_Actuator_Out” which will provide the money to the client from the ATM
@@ -32,17 +32,17 @@
 5- If the balance can not cover the withdraw value, the system shall print a message to the user
    telling him no sufficient balance then the system shall go to the home window.
    
-   #Balance Inquiry
+## Balance Inquiry
    When the user chooses this option, the system shall print the user balance as well as the user full
    name. The system would show a button with the text Ok when pressed, the system shall go to the
    home page.
    
-   #Password Change
+## Password Change
    When the user chooses this option, the system shall ask the user to enter the new password twice.
    The system shall accept only a password with a length four. The two passwords shall be matched in
    order to save. Otherwise the system would ask the user to repeat the operation.
 
-   #Fawry Service
+## Fawry Service
    The system provides 4 Fawry services which are:
 1- Orange Recharge
 2- Etisalat Recharge
