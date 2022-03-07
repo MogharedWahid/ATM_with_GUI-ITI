@@ -11,19 +11,11 @@
    
    
 ## Cash Withdraw
-1- When the user choose the cash withdraw system, the system would ask the user to enter the
-   desired amount to withdraw, if the balance covers this amount of balance, the system would
-   call the function “ATM_Actuator_Out” which will provide the money to the client from the ATM
-   outlet. This function takes the amount of money to be provided.
-   Note: Implement this function as an empty function, we would come back to it in the course
-   in the HW part.
-2- After the withdraw operation, the system shall print a thank you message and return to the
-   home page.
-3- Maximum allowed value per transaction is 5000 L.E
-4- The allowed values are multiple of 100L.E, otherwise the system shall print not allowed value
-   and ask the user to reenter the value
-5- If the balance can not cover the withdraw value, the system shall print a message to the user
-   telling him no sufficient balance then the system shall go to the home window.
+#### 1- When the user choose the cash withdraw system, the system would ask the user to enter the desired amount to withdraw, if the balance covers this amount of balance, the system would call the function “ATM_Actuator_Out” which will provide the money to the client from the ATM outlet. This function takes the amount of money to be provided. Note: Implement this function as an empty function, we would come back to it in the course in the HW part.
+#### 2- After the withdraw operation, the system shall print a thank you message and return to the home page.
+#### 3- Maximum allowed value per transaction is 5000 L.E
+#### 4- The allowed values are multiple of 100L.E, otherwise the system shall print not allowed value and ask the user to reenter the value
+#### 5- If the balance can not cover the withdraw value, the system shall print a message to the user telling him no sufficient balance then the system shall go to the home window.
    
 ## Balance Inquiry
    When the user chooses this option, the system shall print the user balance as well as the user full
@@ -37,10 +29,10 @@
 
 ## Fawry Service
    The system provides 4 Fawry services which are:
-1- Orange Recharge
-2- Etisalat Recharge
-3- Vodafone Recharge
-4- We Recharge.
+#### 1- Orange Recharge
+#### 2- Etisalat Recharge
+#### 3- Vodafone Recharge
+#### 4- We Recharge.
 
    After the user chooses an option, the system would ask the user to enter the phone number and
    the amount of recharge. If the user balance would cover this operation, it would be done (Consider
