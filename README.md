@@ -1,40 +1,58 @@
-# ATM software with GUI using Tkinter framework
-   
-### 1- The system first asks the user to enter his account number then click Enter
-### 2- If the account number is not identified by the system, the system would show an error message then reset
-### 3- After the user enter the correct account number, the system would ask the user to enter the password. The user would have three trials to enter his password. Each time the password is incorrect, the system would ask the user to reenter the password showing to him a message that the password is incorrect.
-### 4- If the password is entered incorrect for 3 successive times, the system would lock the account forever. And the user would be able to enter his account. If the user tried to enter a locked account, the system would show a message that this account is locked, please go to the branch. Note, the password shall be shown as stars (*)
-### 5- If the user entered a valid password, the system will give him the following options:
-###   • Cash Withdraw       • Balance Inquiry
-###   • Password Change     • Fawry Service
-###   • Exit
-   
-   
-## Cash Withdraw
-#### 1- When the user choose the cash withdraw system, the system would ask the user to enter the desired amount to withdraw, if the balance covers this amount of balance, the system would call the function “ATM_Actuator_Out” which will provide the money to the client from the ATM outlet. This function takes the amount of money to be provided. Note: Implement this function as an empty function, we would come back to it in the course in the HW part.
-#### 2- After the withdraw operation, the system shall print a thank you message and return to the home page.
-#### 3- Maximum allowed value per transaction is 5000 L.E
-#### 4- The allowed values are multiple of 100L.E, otherwise the system shall print not allowed value and ask the user to reenter the value
-#### 5- If the balance can not cover the withdraw value, the system shall print a message to the user telling him no sufficient balance then the system shall go to the home window.
-   
-## Balance Inquiry
-   When the user chooses this option, the system shall print the user balance as well as the user full
-   name. The system would show a button with the text Ok when pressed, the system shall go to the
-   home page.
-   
-## Password Change
-   When the user chooses this option, the system shall ask the user to enter the new password twice.
-   The system shall accept only a password with a length four. The two passwords shall be matched in
-   order to save. Otherwise the system would ask the user to repeat the operation.
+# ATM Simulator
 
-## Fawry Service
-   The system provides 4 Fawry services which are:
-#### 1- Orange Recharge
-#### 2- Etisalat Recharge
-#### 3- Vodafone Recharge
-#### 4- We Recharge.
+This Python project simulates a basic ATM machine using the tkinter library for the graphical user interface.
 
-   After the user chooses an option, the system would ask the user to enter the phone number and
-   the amount of recharge. If the user balance would cover this operation, it would be done (Consider
-   nothing to do for now) and the balance would be updated. If not, the system would print no
-   sufficient balance then go to the home page.
+## Features
+
+- **User Authentication:**
+    - Prompts the user to enter their account ID.
+    - Validates the entered ID.
+    - Prompts the user to enter their password.
+    - Validates the password and limits the number of attempts (locks the account after three failed attempts).
+
+- **Main Menu:**
+    - Provides the following options:
+        - Cash Withdraw
+        - Balance Inquiry
+        - Password Change
+        - Fawry Service (for mobile phone recharges)
+    - Allows the user to exit the application.
+
+- **Cash Withdraw:**
+    - Allows the user to enter the withdrawal amount.
+    - Validates the amount (must be a multiple of 100 and within the withdrawal limit).
+    - Updates the account balance.
+    - Simulates the ATM dispensing cash.
+
+- **Balance Inquiry:**
+    - Displays the current account balance.
+
+- **Password Change:**
+    - Allows the user to change their password.
+    - Validates the new password (must be four digits and match the confirmation).
+
+- **Fawry Service:**
+    - Allows the user to select the mobile network operator (Vodafone, Etisalat, Orange, WE).
+    - Prompts the user to enter the phone number and recharge amount.
+    - Validates the phone number and ensures sufficient balance.
+    - Deducts the recharge amount from the account balance.
+
+## How to Run
+
+1. Save the code as a Python file (e.g., `atm_simulator.py`).
+2. Open a terminal or command prompt.
+3. Navigate to the directory where you saved the file.
+4. Run the command: `python atm_simulator.py`
+
+## Note
+
+- This is a basic simulation and does not include real-world features like transaction history, receipts, or integration with actual bank systems.
+- The account data is currently hardcoded within the script. For a more realistic implementation, you would typically store this data in a database.
+
+## Further Improvements
+
+- Implement error handling and more robust input validation.
+- Add features like transaction history, mini-statements, and account statements.
+- Integrate with a database to store and manage account information.
+- Enhance the GUI with a more modern and user-friendly design.
+- Add security measures like two-factor authentication.
